@@ -6,4 +6,4 @@ Les règles du jeu sont issues du Wikibook écrit par des fans de la série, que
 En cours...
 
 
-P.S. Because it's a french tv show with, sometimes, deep french puns, I wrote this code in french. But if you don't speak french and have any question about the code, do not hesitate, i'll translate it for you in English. 
+P.S. Because it's a french tv show, the puns are difficult to translate so I wrote the code in french. But if you don't speak french and have any question about the code, do not hesitate, I'll translate it for you. 
