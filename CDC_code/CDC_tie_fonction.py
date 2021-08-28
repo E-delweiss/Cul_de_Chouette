@@ -93,7 +93,6 @@ def tie_fonction(frame, liste_joueurs, *text_label, checkbox=False, command1=[],
             hdl.GlobalVars.Btn_jr_svt.pack()
     #########################################################################
     if is_an_entry:
-        
         def set_entry():
             entry = aut.get_entry(var_texte, ligne_texte)
             if entry is None:
@@ -112,7 +111,6 @@ def tie_fonction(frame, liste_joueurs, *text_label, checkbox=False, command1=[],
                 warning.config(text=txt)
                 recap = tk.Label(frame, text=f"{entry} perd {hdl.GlobalVars.Dict_var['score']} points.")
                 recap.pack()
-                
                 for k in liste_joueurs:
                     if k.nom in entry:
                         pts = hdl.GlobalVars.Dict_var['score']
@@ -151,7 +149,7 @@ def readstatus(key, var):
     Returns
     -------
     None.
-
+    
     """
     var_obj = var.get(key.nom)
     if var_obj.get() == 1:

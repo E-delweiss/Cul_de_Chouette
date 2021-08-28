@@ -287,13 +287,14 @@ def radiobox(frame, size_radiobox, *text_label):
         return choice
     
     var = tk.IntVar()
+    radiobox = []
     for k in range(size_radiobox):
-        radiobox = tk.Radiobutton(frame, text=text_label[k], variable=var, value=k) 
-        radiobox.pack()
+        radiobox.append(tk.Radiobutton(frame, text=text_label[k], variable=var, value=k))
+        radiobox[k].pack()
         
     frame.wait_variable(var)
     choice = text_label[var.get()]
-    return choice
+    return choice, radiobox
 
 
 def set_entry(frame, joueurs_obj, joueur_courant, var_text, ligne_text, warning, *text, final_ordre):
@@ -339,4 +340,5 @@ def set_entry(frame, joueurs_obj, joueur_courant, var_text, ligne_text, warning,
         warning.pack()
         return
     else:
+        ### le premier joueur à attraper les chouettes en criant "Velutée !" doit les relancer et la combinaison finale prend effet à son bénéfice
         return

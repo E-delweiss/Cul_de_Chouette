@@ -95,19 +95,19 @@ def event(main_frame, btn_jr_svt, Joueurs_obj, joueur_courant, dict_var, detail_
                                                 "Le joueur {arg1} n'existe pas",
                                                 "Impossible, le joueur {arg1} est le lançeur",
                                                 final_ordre = None)]
+                ### Final_ordre doit gérer : le premier joueur à attraper les chouettes en criant "Velutée !" doit les relancer et la combinaison finale prend effet à son bénéfice
                 bouton_gagnant_event = tk.Button(main_frame, text='Ok', command=ordre)
                 bouton_gagnant_event.pack()
                 
             else:
-                pass       
-        
-        
-        choice = aut.radiobox(main_frame, 3, "Le lançeur à crié \"Patte de canaaard !\"",
-                                             "Un joueur a crié \"Velute !\"",
-                                             "Deux joueurs au moins ont criés \"Velute !\"")
-        
+                pass
+            
+        choice, list_radiobutton = aut.radiobox(main_frame, 3, "Le lançeur à crié \"Patte de canaaard !\"",
+                                                 "Un joueur a crié \"Velute !\"",
+                                                 "Deux joueurs au moins ont criés \"Velute !\"")
         choice_button = tk.Button(main_frame)
-        choice_button.config(text="Valider", command=lambda:[choice_button.destroy(), valide_choice()])
+        choice_button.config(text="Valider", command=lambda:[choice_button.destroy(), valide_choice(), 
+                                                         [k.config(state='disable') for k in list_radiobutton]])
         choice_button.pack()
         
    
