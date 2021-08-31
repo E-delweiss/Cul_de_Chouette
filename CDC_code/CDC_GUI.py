@@ -14,6 +14,7 @@ import CDC_amorcage as am
 import CDC_notice as nt
 import CDC_donne_event as d_ev
 import CDC_fonctions as fct
+import CDC_citations as citations
 
 
 class Root(tk.Tk):
@@ -46,6 +47,7 @@ class Root(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         ReOrganize()
         Help_notice(self)
+        Citation_window(self)
         Score_window(self)
 
         
@@ -291,7 +293,31 @@ class Score_window(tk.LabelFrame):
             
             
             
-            
+class Citation_window(tk.LabelFrame):
+    """
+    Gère l'aide pour les combinaison de dés
+    """
+    
+    def __init__(self, master=None):
+        """
+        Initialisation du constructeur
+        Place une section 'citation' au dessus des notices
+        """
+        tk.LabelFrame.__init__(self, master)
+        self.place( x = 20, y = 500, width = 980, height = 100)
+        
+        self.citation_label = tk.Label(self)
+        self.citation_label2 = tk.Label(self)
+        self.after(20, self.call_citation)
+        
+    def call_citation(self):
+        replique, indication = citations.citation()
+        self.citation_label.config(text = replique)
+        self.citation_label2.config(text = indication)
+        self.citation_label.pack()
+        self.citation_label2.pack()
+        self.after(3000, self.call_citation)
+
             
 
 class Help_notice(tk.LabelFrame):

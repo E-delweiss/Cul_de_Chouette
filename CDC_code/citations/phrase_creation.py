@@ -8,7 +8,7 @@ Created on Sat Aug 21 19:07:02 2021
 
 import json
 
-path = "/Users/Thierry/Library/Mobile Documents/com~apple~CloudDocs/Documents/Python_divers/CDC/citation/test/citations_better.json"
+path = "citations.json"
 with open(path, 'r') as jsonFile:
     data_json = json.load(jsonFile)
 
@@ -21,7 +21,8 @@ Ep = data_json['0']['infos']['episode']
 
 
 
-phrase = "{0}\n{1!s:30}-{2}, {3}ep.{4}".format(replique, ' ', Perso, Saison, Ep)
+# phrase = "{0}\n{1!s:30}-{2}, {3}ep.{4}".format(replique, ' ', Perso, Saison, Ep)
+phrase = "{0}\n{1!s:3}-{2}, {3}ep.{4}".format(replique, ' ', Perso, Saison, Ep)
 print(phrase)
 
 ### prendre les phrases <150 caractères ?
