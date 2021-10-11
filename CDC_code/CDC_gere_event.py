@@ -77,40 +77,41 @@ def event(main_frame, btn_jr_svt, Joueurs_obj, joueur_courant, dict_var, detail_
     
     
     elif dict_var['nom_regle'] == "Suite-Velutée":
-        to_clear = []
         def valide_choice():
             if 'Patte' in choice :
-                tk.Label(main_frame, text="f{joueur_courant.nom} valide sa Velute et condamne donc la Suite-Velutée.").pack()
+                tk.Label(main_frame, text=f"{joueur_courant.nom} valide sa Velute et condamne donc la Suite-Velutée.").pack()
                 tk.Label(main_frame, text=f"{joueur_courant.nom} gagne {dict_var['score']} points !").pack()
                 joueur_courant.ajout_ptsjoueur(dict_var['score'])
+                btn_jr_svt.pack()
                 
             elif 'Un joueur' in choice :
-                tk.Label(main_frame, text="Quel joueur à crié \"Velutée !\" ?").pack()
+                tk.Label(main_frame, text="Quel joueur à crié \"Velute !\" ?").pack()
                 var_text = tk.StringVar()
                 ligne_text = tk.Entry(main_frame, textvariable=var_text, width=30).pack()
                 warning = tk.Label(main_frame)
-                ordre = lambda : [aut.set_entry(main_frame, Joueurs_obj, 
+                
+                bouton_gagnant_event = tk.Button(main_frame)
+                ordre = lambda : aut.set_entry(main_frame, Joueurs_obj, 
                                                 joueur_courant, var_text, ligne_text,
                                                 warning,
                                                 "Le joueur {arg1} n'existe pas",
                                                 "Impossible, le joueur {arg1} est le lançeur",
-                                                final_ordre = None)]
-                ### Final_ordre doit gérer : le premier joueur à attraper les chouettes en criant "Velutée !" doit les relancer et la combinaison finale prend effet à son bénéfice
-                bouton_gagnant_event = tk.Button(main_frame, text='Ok', command=ordre)
+                                                final_ordre = "g_ev.velutee_attrape_chouette(main_frame, Joueurs_obj, entry)")
+                
+                
+                bouton_gagnant_event.config(text='Ok', command=ordre)
                 bouton_gagnant_event.pack()
                 
             else:
-                pass
-            
+                tk.Label(main_frame, text="Deux joueurs ont crié \"Velutée\"? Qui ?").pack()
+        
         choice, list_radiobutton = aut.radiobox(main_frame, 3, "Le lançeur à crié \"Patte de canaaard !\"",
                                                  "Un joueur a crié \"Velute !\"",
                                                  "Deux joueurs au moins ont criés \"Velute !\"")
+
         choice_button = tk.Button(main_frame)
-        choice_button.config(text="Valider", command=lambda:[choice_button.destroy(), valide_choice(), 
-                                                         [k.config(state='disable') for k in list_radiobutton]])
+        choice_button.config(text="Suite", command=lambda:[choice_button.destroy(), valide_choice()])
         choice_button.pack()
-        
-   
         
         return 
 
@@ -133,5 +134,20 @@ def question(main_frame, dict_var):
     question.pack()
     
     
+
+def velutee_attrape_chouette(main_frame, Joueurs_obj, entry):
+    ### Final_ordre doit gérer : le premier joueur à attraper les chouettes en criant
+    ### "Velutée !" doit les relancer et la combinaison finale prend effet à son bénéfice
     
+    ### on recupere l'instance du joueur
+    joueur_entry = [jr for jr in Joueurs_obj if jr.nom == entry][0]
+    
+    text1=f"le joueur {joueur_entry.nom} doit relancer les chouettes et la combinaison finale prend effet à son bénéfice"
+    l1 = tk.Label(main_frame, text=text1)
+    l1.pack()
+    
+    btn_lance = tk.Button(main_frame, text='Lancer les Chouettes', 
+                          command=aut.toss_chouettes(main_frame,joueur_entry))
+    btn_lance.pack()
+
     

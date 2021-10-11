@@ -9,7 +9,7 @@ Created on Sat Aug 21 19:07:02 2021
 import json
 import random as rd
 
-path = "citation/citations.json"
+path = "citations/citations.json"
 with open(path, 'r') as jsonFile:
     data_json = json.load(jsonFile)
 

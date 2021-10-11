@@ -99,7 +99,7 @@ class Game(tk.LabelFrame):
         self.Liste_boutons.append(self.bouton_chouettes)
         self.Liste_boutons.append(self.bouton_cul)
         
-        ordre1 = lambda: aut.toss_chouettes(self, self.bouton_chouettes, self.bouton_cul, Root.Joueurs_obj[self.It])
+        ordre1 = lambda: aut.toss_chouettes(self, Root.Joueurs_obj[self.It], self.bouton_chouettes, self.bouton_cul)
         ordre2 = lambda: [aut.toss_cul(self, self.bouton_chouettes, self.bouton_cul, Root.Joueurs_obj[self.It]),  self.poursuivre()]
         
         self.bouton_chouettes.config(command=ordre1)
@@ -316,7 +316,7 @@ class Citation_window(tk.LabelFrame):
         self.citation_label2.config(text = indication)
         self.citation_label.pack()
         self.citation_label2.pack()
-        self.after(3000, self.call_citation)
+        self.after(30000, self.call_citation)
 
             
 
@@ -361,5 +361,4 @@ class Help_notice(tk.LabelFrame):
 root = Root()
 root.title("Jeu du Cul de Chouette")
 root.geometry('1400x800')
-# root1.wm_iconbitmap(r'/Users/thierry/Documents/Python_divers/CDC/owl1.ico')
 root.mainloop()
