@@ -48,11 +48,6 @@ class Root(tk.Tk):
     Joueur_gagnant = ''
     Help_notice = None
     
-    WIDTH = 1000
-    HEIGHT = 600
-    X_OFFSET = 10
-    Y_OFFSET = 10
-    
     def __init__(self, *args, **kwargs):
         """
         Initialisation du constructeur
@@ -221,23 +216,22 @@ class Quel_joueur_commence(tk.LabelFrame):
         self.place(x=geom.OFFSET_MAINFRAME_X, y=geom.OFFSET_MAINFRAME_Y, 
                    width=geom.MAINFRAME_WIDTH, height=geom.MAINFRAME_HEIGHT)
         
-        self.Y_message_pres = geom.MAINFRAME_HEIGHT/3
-        self.Y_OFFSET_message = 50
-        self.Y_OFFSET_bouton_jet_dice = 25
+        Y_OFFSET_message = 50
+        Y_OFFSET_bouton_jet_dice = 25
         INCREM_message = 70
         
         self.message_pres = tk.Label(self, text="Chaque joueur va lancer 1 dé.\nLe joueur qui a le plus petit score commence.\n")
-        self.message_pres.place(x=geom.MAINFRAME_CENTRE_X, y=self.Y_message_pres, anchor='center')
+        self.message_pres.place(x=geom.MAINFRAME_CENTRE_X, y=geom.MAINFRAME_TOP_Y, anchor='center')
         self.Liste_labels.append(self.message_pres)
         
         self.liste_labels = []
         self.liste_boutons  = []
         for joueur in Root.Joueurs_obj:
-            self.Y_message = self.Y_message_pres + self.Y_OFFSET_message
-            self.Y_bouton_jet_dice = self.Y_message + self.Y_OFFSET_bouton_jet_dice
+            Y_message = geom.MAINFRAME_TOP_Y + Y_OFFSET_message
+            self.Y_bouton_jet_dice = Y_message + Y_OFFSET_bouton_jet_dice
             
             self.message = tk.Label(self, text=f"Cliquer sur le bouton pour que {joueur.nom} lance un dé.")
-            self.message.place(x=geom.MAINFRAME_CENTRE_X, y=self.Y_message, anchor='center')
+            self.message.place(x=geom.MAINFRAME_CENTRE_X, y=Y_message, anchor='center')
             self.Liste_labels.append(self.message)
             
             self.bouton_jet_dice = tk.Button(self, text="Lancer un dé", command=self.lancer_dice)
@@ -248,7 +242,7 @@ class Quel_joueur_commence(tk.LabelFrame):
             self.liste_labels.append(self.message)
             self.liste_boutons.append(self.bouton_jet_dice)
             
-            self.Y_OFFSET_message += INCREM_message
+            Y_OFFSET_message += INCREM_message
             
     def lancer_dice(self):
         """
@@ -261,9 +255,10 @@ class Quel_joueur_commence(tk.LabelFrame):
 
         """
         OFFSET = geom.OFFSET_BUTTON*2
+        y = self.Y_bouton_jet_dice+OFFSET
         
         ### Lancé du premier dé et stockage dans {Premier_jet}
-        self.Premier_jet[Root.Joueurs_obj[self.Iterateur].nom] = rd.randint(1, 1000)
+        self.Premier_jet[Root.Joueurs_obj[self.Iterateur].nom] = rd.randint(1, 6)
         
         self.liste_labels[self.Iterateur]["text"] = f"{Root.Joueurs_obj[self.Iterateur].nom} a fait {self.Premier_jet[Root.Joueurs_obj[self.Iterateur].nom]} !"
         self.liste_boutons[self.Iterateur]["state"] = 'disable'
@@ -272,7 +267,7 @@ class Quel_joueur_commence(tk.LabelFrame):
         
         if self.Iterateur == len(Root.Joueurs_obj):
             self.bouton_suivant = tk.Button(self, text="Suivant", command=self.est_ce_que_egalite)
-            self.bouton_suivant.place(x=geom.MAINFRAME_CENTRE_X, y=self.Y_bouton_jet_dice+OFFSET, anchor='center')
+            self.bouton_suivant.place(x=geom.MAINFRAME_CENTRE_X, y=y, anchor='center')
             self.Liste_boutons.append(self.bouton_suivant)
 
 
@@ -491,13 +486,16 @@ class Regles_CDC(tk.LabelFrame):
         dict_var = am.give_the_rules(self, bouton_joueur_suivant, Root.Joueurs_obj, chouette_1, chouette_2, cul)
         Root.Help_notice = dict_var['nom_regle']
         ######
+        if dict_var['event'] == 'NaN':
+            tk.Label(self, text="Cette combinaison n'est pas encore programee").pack()
+            bouton_joueur_suivant.pack()
         
         if not dict_var['event']:
             ordre = lambda: aut.handle_no_event(self, btn, bouton_joueur_suivant, Root.Joueurs_obj[Game.It], dict_var['score'])
             btn = tk.Button(self, text='Ok', command=ordre)
             btn.pack()
             
-        if dict_var['event']:
+        if dict_var['event'] is True:
             d_ev.annonce_evenement(self, bouton_joueur_suivant, 
                                    Root.Joueurs_obj, 
                                    Root.Joueur_en_cours,
@@ -557,50 +555,49 @@ class Score_window(tk.LabelFrame):
         
         
         self.label = tk.Label(self, text='Liste des joueurs')
-        self.label.place(relx=0.5, rely=0.05, anchor='center')
+        self.label.place(x=geom.SCOREFRAME_TOP_X, y=geom.SCOREFRAME_TOP_Y, anchor='center')
         
-        count = 0.1
+        offset = geom.SCOREFRAME_TOP_Y + geom.OFFSET_TEXT
         for k in Root.Joueurs_obj:
-            tk.Label(self, text=k.nom).place(relx=0.5, rely=count, anchor='center')
-            count += 0.05
+            tk.Label(self, text=k.nom).place(x=geom.SCOREFRAME_CENTRE_X, y=offset, anchor='center')
+            offset += geom.OFFSET_TEXT
         
-        count+=0.1
-        self.score_bouton = tk.Button(self, text="Score", command=lambda: self.affiche_score(count, self.score_bouton))
-        self.score_bouton.place(relx=0.5, rely=count, anchor='center')
+        offset += geom.OFFSET_BUTTON
+        self.score_bouton = tk.Button(self, text="Score", command=lambda: self.affiche_score(offset, self.score_bouton))
+        self.score_bouton.place(x=geom.SCOREFRAME_CENTRE_X, y=offset, anchor='center')
         
         
         #### Bévue
-        count_bevue = count + 0.5
-        self.bevue_bouton = tk.Button(self, text="Bévue", command=lambda: self.bevue(count_bevue))
-        self.bevue_bouton.place(relx=0.5, rely=count_bevue, anchor='center')
+        offset_bevue = geom.SCOREFRAME_BEVUE_Y
+        self.bevue_bouton = tk.Button(self, text="Bévue", command=lambda: self.bevue(offset_bevue))
+        self.bevue_bouton.place(x=geom.SCOREFRAME_CENTRE_X, y=offset_bevue, anchor='center')
         
         
         
-    def affiche_score(self, count, btn):
+    def affiche_score(self, offset, btn):
         """
         Gere l'actualisation des scores avec un bouton
-        count : variable de positionnement du Widget en fonction des précédents
+        offset : variable de positionnement du Widget
         btn : score_bouton
         """
         btn.config(text="Actualiser")
         
-        count+=0.1
         for k in Root.Joueurs_obj:
+            offset += geom.OFFSET_TEXT
             txt =f"{k.nom}    :    {k.PtsJoueur} points"
-            tk.Label(self, text=txt).place(relx=0.5, rely = count, anchor='center')
-            count += 0.05
+            tk.Label(self, text=txt).place(x=geom.SCOREFRAME_CENTRE_X, y=offset, anchor='center')
         
         
-    def bevue(self, count):
+    def bevue(self, offset_bevue):
         """
         Gere la bévue : fait perdre 10 pts au joueur entrain de joueur à chaque fois
         qu'on appuie dessus.
-        count : variable de positionnement du Widget bévue en fonction des précédents
+        offset_bevue : variable de positionnement du Widget bévue
         """
         if isinstance(Root.Joueur_en_cours, cl.Joueur):
-            count+=0.1
+            offset_bevue += geom.OFFSET_TEXT
             Root.Joueur_en_cours.ajout_ptsjoueur(-fct.bevue())
-            tk.Label(self, text=f"Le joueur {Root.Joueur_en_cours.nom} perd 10 points pour bévue").place(relx=0.5, rely=count, anchor='center')
+            tk.Label(self, text=f"Le joueur {Root.Joueur_en_cours.nom} perd 10 points pour bévue").place(x=geom.SCOREFRAME_CENTRE_X, y=offset_bevue, anchor='center')
         else:
             return
             

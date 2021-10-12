@@ -9,8 +9,8 @@ Created on Sat Aug 21 19:07:02 2021
 import json
 import random as rd
 
-path = "citations/citations.json"
-with open(path, 'r') as jsonFile:
+# path = "citations.json"
+with open('CDC_code/citations.json', 'r') as jsonFile:
     data_json = json.load(jsonFile)
 
 

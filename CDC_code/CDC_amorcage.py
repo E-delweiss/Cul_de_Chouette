@@ -44,10 +44,12 @@ def give_the_rules(main_frame, btn_jr_svt, joueurs_obj, chouette_1, chouette_2, 
     dict_var = d_rls.quelle_regle(chouette_1, chouette_2, cul)
     
     # S'il n'y a pas d'événement particulier
+    if dict_var['is_event'] == 'NaN' :
+        return {'event':'NaN', 'score':'NaN', 'nom_regle':'NaN'}
+    
     if dict_var['is_event'] is False :
         annonce_de_la_regle = tk.Label(main_frame, text=dict_var['nom_regle']+' !!!') 
         annonce_de_la_regle.pack()
-        
         return {'event':False, 'score':dict_var['score'], 'nom_regle':dict_var['nom_regle']}
       
     # S'il y a un événement particulier           

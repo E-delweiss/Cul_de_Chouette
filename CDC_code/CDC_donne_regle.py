@@ -77,17 +77,6 @@ def quelle_regle(chouette_1, chouette_2, cul):
         score = fct.la_suite_velutee(dico_dice)
 
 
-
-
-
-
-
-
-
-
-
-
-
     elif rls.artichette(dico_dice):
         pass
     
@@ -95,9 +84,9 @@ def quelle_regle(chouette_1, chouette_2, cul):
         pass
     
     else:
-        print('il ny a rien')
-        nom_regle = None
-        is_event = None
-        score = None
+        print("En cours d'implementation")
+        nom_regle = 'NaN'
+        is_event = 'NaN'
+        score = 'NaN'
         
     return {'nom_regle':nom_regle, 'score':score, 'is_event':is_event}
