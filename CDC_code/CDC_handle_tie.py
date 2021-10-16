@@ -132,7 +132,7 @@ def ending_tie():
 
         recap = tk.Label(GlobalVars.Main_frame, text=f"Les joueurs {', '.join(temp)} perdent {GlobalVars.Dict_var['score']} points.")
         recap.pack()
-        GlobalVars.btn_jr_svt.pack()
+        GlobalVars.Btn_jr_svt.pack()
             
     #######################################################################         
     if GlobalVars.Dict_var['nom_regle'] == 'Suite':

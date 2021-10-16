@@ -181,6 +181,7 @@ class Inscription_des_joueurs(tk.LabelFrame):
             #Run
             Quel_joueur_commence()
             Score_window()
+            Citation_window()
 
         
 class Quel_joueur_commence(tk.LabelFrame):
@@ -358,17 +359,15 @@ class ReOrganize():
         Initialisation du constructeur
         
         """
-        # self.destroy()
-        # self.update()
-        
         for k in range(len(Root.ListeJoueurs)):
             if Root.Joueurs_obj[k].nom == Root.Firstplayer:
                 temp = Root.Joueurs_obj[k]
                 Root.Joueurs_obj.remove(temp)
                 Root.Joueurs_obj.insert(0, temp)
-        
         Game()
-            
+        Citation_window()
+
+
 class Game(tk.LabelFrame):
     """
     Permet de faire lancer les dés aux joueurs
@@ -444,7 +443,7 @@ class Game(tk.LabelFrame):
         None.
 
         """
-        self.launch_button = tk.Button(self, text="Suivant", command=Regles_CDC)
+        self.launch_button = tk.Button(self, text="Suivant", command=lambda: [Regles_CDC(), Citation_window()])
         self.launch_button.place(x=geom.MAINFRAME_CENTRE_X, y=geom.MAINFRAME_CENTRE_Y, anchor='center')
         self.Liste_boutons.clear()
         self.Liste_boutons.append(self.launch_button)
@@ -480,7 +479,7 @@ class Regles_CDC(tk.LabelFrame):
         ####
         
         
-        bouton_joueur_suivant = tk.Button(self, text='Joueur suivant', command=lambda: Game(self))
+        bouton_joueur_suivant = tk.Button(self, text='Joueur suivant', command=lambda: [self.destroy(), self.update(), Game(), Citation_window()])
         
         ######
         dict_var = am.give_the_rules(self, bouton_joueur_suivant, Root.Joueurs_obj, chouette_1, chouette_2, cul)
@@ -668,9 +667,9 @@ class Help_notice(tk.LabelFrame):
 
 
 
-
-root = Root()
-root.title("Jeu du Cul de Chouette")
-root.geometry(geom.win_size)
-# root1.wm_iconbitmap(r'/Users/thierry/Documents/Python_divers/CDC/owl1.ico')
-root.mainloop()
+if __name__ == "__main__" :
+    root = Root()
+    root.title("Jeu du Cul de Chouette")
+    root.geometry(geom.win_size)
+    # root1.wm_iconbitmap(r'/Users/thierry/Documents/Python_divers/CDC/owl1.ico')
+    root.mainloop()
