@@ -8,7 +8,7 @@ Created on Wed Jul  7 22:10:40 2021
 
 
 import sys
-sys.path.insert(0,"./CDC_code")
+sys.path.insert(0,"./CDC_modules")
 import CDC_GUI_long as GUI
 import CDC_geometry
 
