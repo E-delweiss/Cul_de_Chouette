@@ -3,8 +3,14 @@
 Les règles du jeu sont issues du Wikibook écrit par des fans de la série, que je remercie pour leur contribution : https://fr.wikibooks.org/wiki/Boîte_à_jeux/Le_cul_de_chouette
 
 
-Règles programmées: 
-- (en cours)
+Règles programmées (en cours): 
+- La Chouette
+- La Velute
+- La Chouette-Velute
+- Le Cul de Chouette
+- La Suite
+- La Suite-Velutée
+- La Bévue
 
 
 
