@@ -10,7 +10,7 @@ import json
 import random as rd
 
 # path = "citations.json"
-with open('CDC_code/citations.json', 'r') as jsonFile:
+with open('./CDC_modules/citations.json', 'r') as jsonFile:
     data_json = json.load(jsonFile)
 
 
